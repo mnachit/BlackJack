@@ -122,47 +122,43 @@ public class Card_management {
 //        }
 //    }
 
-    public static void main(String[] args) {
-        int[][] card1 = {
-                {1, 1},
-                {1, 2}
-        };
-
-        int[][] card2 = {
-                {3, 4},
-                {4, 3}
-        };
-
-        int[][] result = defausser_cartes(card1, card2);
-
-        System.out.println("Merged Cards:");
-        for (int i = 0; i < result.length; i++) {
-            System.out.println("(" + result[i][0] + ", " + result[i][1] + ")");
-        }
-    }
-
 //    public static void main(String[] args) {
-//        int[][] cards = {
-//                {13, 4},
-//                {5, 3},
+//        int[][] card1 = {
 //                {1, 1},
-//                {6, 3}
+//                {1, 2}
 //        };
-//        int index = 0;
 //
-//        int[][][] result = piocher_n_cartes(cards, index);
+//        int[][] card2 = {
+//                {3, 4},
+//                {4, 3}
+//        };
 //
-//        int[][] card1 = result[0];
-//        int[][] card2 = result[1];
+//        int[][] result = defausser_cartes(card1, card2);
 //
-//        System.out.println("Card 1:");
-//        for (int i = 0; i < card1.length; i++) {
-//            System.out.println("(" + card1[i][0] + ", " + card1[i][1] + ")");
-//        }
-//
-//        System.out.println("Card 2:");
-//        for (int i = 0; i < card2.length; i++) {
-//            System.out.println("(" + card2[i][0] + ", " + card2[i][1] + ")");
+//        System.out.println("Merged Cards:");
+//        for (int i = 0; i < result.length; i++) {
+//            System.out.println("(" + result[i][0] + ", " + result[i][1] + ")");
 //        }
 //    }
+
+    public static void main(String[] args) {
+        int[][] deck = createDeckOfCards(1,1);
+//
+        int[][] shuffledDeck = melanger_jeu_cartes(deck);
+        int index = 0;
+        int[][][] result = piocher_n_cartes(shuffledDeck, index);
+
+        int[][] card1 = result[0];
+        int[][] card2 = result[1];
+
+        System.out.println("Card 1:");
+        for (int i = 0; i < card1.length; i++) {
+            System.out.println("(" + card1[i][0] + ", " + card1[i][1] + ")");
+        }
+
+        System.out.println("Card 2:");
+        for (int i = 0; i < card2.length; i++) {
+            System.out.println("(" + card2[i][0] + ", " + card2[i][1] + ")");
+        }
+    }
 }
