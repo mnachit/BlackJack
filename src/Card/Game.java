@@ -40,21 +40,21 @@ public class Game {
                 int[][] card1 = result[0];
                 int price = 0;
                 // Create Object in class Player
-                System.out.println("Hey " + player.getName() + " So Your money is : " + player.pot() + "$\n");
+                System.out.println("Hey " + player.getName() + " So Your money is : " + player.getPot() + "$\n");
                 while (leave == false) {
                     System.out.println("Your Sold is : "+player.getPot()+"$ How do you want to bet?\n");
                     System.out.printf("-> ");
                     price = scanner.nextInt();
-                    player.setPot(player.getPot() - price);
                     while (price < 01)
                     {
                         System.out.println("No");
                     }
-                    if (price > player.pot()) {
+                    if (price > player.getPot()) {
                         System.err.println("\nPrice not found");
                         System.exit(-1);
                         break;
                     }
+                    player.setPot(player.getPot() - price);
 
 //                    System.out.println(card1.length);
                     if(card1.length == 0 || card1.length < 0)
@@ -92,7 +92,9 @@ public class Game {
 
                     System.out.println("\nYour total is " + sum);
                     if (sum > 21) {
-                        System.out.println("Your pot is now :"+player.getPot());
+                        sum = 0;
+                        System.out.print("\nYou bust!\n" +
+                                "Your pot is now $" + player.getPot() + "\n");
                         System.out.print("\nPlay another hand? (Y/n) ");
                         Scanner end = new Scanner(System.in);
                         String yesNo = end.nextLine();
@@ -105,8 +107,9 @@ public class Game {
                         }
                         System.out.println();
                     } else if (sum == 21) {
+                        sum = 0;
                         player.setPot(player.getPot() + price + price);
-                        System.out.println("\n");
+                        System.out.println("You WIN!\n");
                     } else {
                         String choice = "";
                         System.out.println();
@@ -146,11 +149,14 @@ public class Game {
                             sum += res[0];
                             System.out.println("\nYour total is " + sum);
                             if (sum > 21) {
+                                sum = 0;
                                 System.out.print("\nYou bust!\n" +
                                         "Your pot is now $" + player.getPot() + "\n");
                                 break;
                             } else if (sum == 21) {
+                                sum = 0;
                                 player.setPot(player.getPot() + price + price);
+                                System.out.println("You WIN!");
                                 break;
                             }
                             else {
@@ -168,15 +174,16 @@ public class Game {
                             int sum1 = 0;
                             int index2 = 0;
                             int[][] shuffledCards1 = new int[card1.length][2];
-                            System.out.println(card1.length);
+//                            System.out.println(card1.length);
                             boolean checkBo2 = false;
                             boolean checkBo3 = false;
+                            String cont = "";
                             System.out.print("The dealers' cards are: ");
                             while (!checkBo2) {
                                 int[][][] drawnCard1 = extraire_ieme_carte(card1, 0);
                                 shuffledCards1[0] = drawnCard1[0][0];
                                 card1 = drawnCard1[1];
-                                int res1[] = Player.playerHand(shuffledCards1);
+                                int res1[] = dealer.dealerHand(shuffledCards1);
 
                                 System.out.print("[" + res1[0] + "," + res1[1] + "]");
                                 if (res1[0] == 1) {
@@ -200,18 +207,36 @@ public class Game {
                             {
                                 System.out.println(sum1 + "Dealer loses!");
                                 player.setPot(player.getPot() + price + price);
+                                cont = new Scanner(System.in).nextLine();
+                                String t=cont;
+                                System.out.print("\n");
                             }
                             else if (sum1 == 21)
                             {
                                 System.out.println(sum1 + "Dealer Wins!");
+//                                System.out.println("1");
+                                cont = new Scanner(System.in).nextLine();
+                                String t=cont;
+                            }
+                            if (sum1 == sum)
+                            {
+                                System.out.println("--Push--");
+                                cont = new Scanner(System.in).nextLine();
+                                String t=cont;
                             }
                             else
                             {
-                                if (sum < sum1)
+                                if (sum < sum1) {
                                     System.out.println(sum1 + " Dealer Wins!");
+                                    cont = new Scanner(System.in).nextLine();
+                                    String t=cont;
+//                                    System.out.println("2");
+                                }
                                 else {
                                     while (!checkBo3)
                                     {
+                                        cont = new Scanner(System.in).nextLine();
+                                        String t=cont;
                                         System.out.print("\nThe dealers' next card is: ");
                                         if(card1.length == 0 || card1.length < 0)
                                         {
@@ -222,7 +247,7 @@ public class Game {
                                         int[][][] drawnCard1 = extraire_ieme_carte(card1, 0);
                                         shuffledCards1[0] = drawnCard1[0][0];
                                         card1 = drawnCard1[1];
-                                        int res1[] = Player.playerHand(shuffledCards1);
+                                        int res1[] = dealer.dealerHand(shuffledCards1);
 
                                         System.out.print("["+res1[0]+","+res1[1]+"]");
                                         if (res1[0] == 1) {
@@ -243,7 +268,7 @@ public class Game {
                                         }
                                         else if (sum1 == 21)
                                         {
-                                            System.out.println(sum1 + "Dealer Wins!");
+                                            System.out.println(sum1 + "$ Dealer Wins!");
                                             break;
                                         }
                                     }
@@ -258,7 +283,7 @@ public class Game {
                     // get input to keep playing
                     else
                     {
-                        System.out.println("Your pot is now :"+player.getPot());
+                        System.out.println("Your pot is now : $"+player.getPot());
                         System.out.print("\nPlay another hand? (Y/n) ");
                         Scanner end = new Scanner(System.in);
                         String yesNo = end.nextLine();
