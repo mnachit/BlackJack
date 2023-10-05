@@ -42,12 +42,13 @@ public class Game {
                 // Create Object in class Player
                 System.out.println("Hey " + player.getName() + " So Your money is : " + player.getPot() + "$\n");
                 while (leave == false) {
-                    System.out.println("Your Sold is : "+player.getPot()+"$ How do you want to bet?\n");
+                    System.out.println("Your Sold is : "+player.getPot()+"$\nHow do you want to bet?\n");
                     System.out.printf("-> ");
                     price = scanner.nextInt();
-                    while (price < 01)
+                    while (price < 01 || price > player.getPot())
                     {
                         System.out.println("No");
+                        price = scanner.nextInt();
                     }
                     if (price > player.getPot()) {
                         System.err.println("\nPrice not found");
@@ -66,6 +67,7 @@ public class Game {
                     boolean checkBo = false;
                     int indexx = 0;
                     System.out.print("Your cards are: ");
+                    sum = 0;
                     while (!checkBo) {
                         int[][][] drawnCard = extraire_ieme_carte(card1, 0);
                         shuffledCards[0] = drawnCard[0][0];
@@ -233,7 +235,7 @@ public class Game {
 //                                    System.out.println("2");
                                 }
                                 else {
-                                    while (!checkBo3)
+                                    while (!checkBo3 && sum1 < 16)
                                     {
                                         cont = new Scanner(System.in).nextLine();
                                         String t=cont;
@@ -283,7 +285,7 @@ public class Game {
                     // get input to keep playing
                     else
                     {
-                        System.out.println("Your pot is now : $"+player.getPot());
+                        System.out.println("\nYour pot is now : $"+player.getPot());
                         System.out.print("\nPlay another hand? (Y/n) ");
                         Scanner end = new Scanner(System.in);
                         String yesNo = end.nextLine();
